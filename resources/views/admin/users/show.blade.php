@@ -61,6 +61,18 @@
                 <th>{{ __('views.admin.users.show.table_header_7') }}</th>
                 <td>{{ $user->updated_at }} ({{ $user->updated_at->diffForHumans() }})</td>
             </tr>
+            <tr>
+                <th>Anmeldung</th>
+                <td>
+                    <button>Helfer</button><!-- ausblenden wenn bezahlt -->
+                    <button>Bezahlt</button> <!--ausblenden wenn Helfer -->
+                    <button>Nimmt nicht teil</button>
+                    <button>Bescheinigung erhalten</button><!-- ausblenden bei 18 oder älter -->
+                    <button>Übernachtung?</button>
+                </td>
+
+
+            </tr>
             </tbody>
         </table>
     </div>

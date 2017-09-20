@@ -53,6 +53,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Dashboard
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
+    Route::get('teilnehmer/instrumentalliste', 'VerwaltungController@Instrumental')->name("instrumentalliste");
+    Route::get('teilnehmer/comboliste', 'VerwaltungController@Combo')->name("comboliste");
+    // Teilnehmer
+    Route::get('teilnehmer', 'TeilnehmerController@index')->name("teilnehmer");
+    Route::get('teilnehmer/hinzufuegen', 'TeilnehmerController@Add')->name("teilnehmer.add");
+    Route::get('teilnehmer/ImportCSV', 'TeilnehmerController@ImportForm')->name("teilnehmer.importform");
+    Route::post('teilnehmer/ImportCSV', 'TeilnehmerController@Import')->name("teilnehmer.import");
+
+    Route::put('teilnehmer/create', 'TeilnehmerController@store')->name("teilnehmer.create");
+    Route::get('teilnehmer/{teilnehmer}', 'TeilnehmerController@show')->name("teilnehmer.show");
+    Route::get('teilnehmer/anmelden/{teilnehmer}', 'TeilnehmerController@AnmeldeBtn');
+    Route::get('teilnehmer/helfer/{teilnehmer}', 'TeilnehmerController@HelferBtn');
+    Route::get('teilnehmer/bezahlen/{teilnehmer}', 'TeilnehmerController@BezahltBtn');
+    Route::get('teilnehmer/bescheinigung/{teilnehmer}', 'TeilnehmerController@BescheinigungBtn');
+
+
+
     //Users
     Route::get('users', 'UserController@index')->name('users');
     Route::get('users/{user}', 'UserController@show')->name('users.show');
