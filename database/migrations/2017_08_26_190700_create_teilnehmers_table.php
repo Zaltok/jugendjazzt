@@ -18,20 +18,17 @@ class CreateTeilnehmersTable extends Migration
             $table->string("Nachname");
             $table->string("Vorname");
 
-            $table->integer("Alter")->nullable();
-            $table->date("Geburtstag")->nullable();
-            $table->string("PLZ")->nullable("");
-            $table->string("Ort")->nullable("");
-            $table->string("Strasse")->nullable("");
-            $table->string("Telefon")->nullable("");
-            $table->string("Mobil")->nullable("");
-            $table->string("Instrument1")->nullable("");
-            $table->integer("Instrument1Seit")->nullable()->default(0);
-            $table->integer("Instrument1Unt")->nullable(0);
-            $table->boolean("Angemeldet")->default(false);
-            $table->boolean("Bezahlt")->default(false);
-            $table->boolean("Helfer")->default(false);
-            $table->boolean("BescheinigungErhalten")->default(false);
+            $table->integer("Alter")->nullable()->default(0);
+            $table->date("Geburtstag")->nullable()->default(null);
+            $table->string("PLZ")->nullable("")->default(null);
+            $table->string("Ort")->nullable("")->default(null);
+            $table->string("Strasse")->nullable("")->default(null);
+            $table->string("Telefon")->nullable("")->default(null);
+            $table->string("Mobil")->nullable("")->default(null);
+            $table->string("AGBB")->nullable("")->default("");
+            $table->integer("eigeneEinschaetzung")->default(1);
+            $table->boolean("bigband")->default(false);
+            $table->boolean('combo')->default(false);
             $table->timestamps();
         });
     }

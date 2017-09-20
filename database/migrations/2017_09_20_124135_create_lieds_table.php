@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRaumsTable extends Migration
+class CreateLiedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateRaumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('raums', function (Blueprint $table) {
+        Schema::create('lieds', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('titel');
+            $table->string('komponist');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -26,6 +29,7 @@ class CreateRaumsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('raums');
+        Schema::dropIfExists('lieds');
+
     }
 }

@@ -13,4 +13,11 @@ class Teilnehmer extends Model
      */
     protected $table = 'teilnehmers';
 
+    public function Anmeldungen() {
+        $this->hasMany(Anmeldung::class);
+    }
+
+    public function Instrumente() {
+        $this->belongsToMany(Instrument::class);
+    }
 }

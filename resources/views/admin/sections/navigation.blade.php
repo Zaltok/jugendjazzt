@@ -58,15 +58,20 @@
                 </ul>
             </div>
             <div class="menu_section">
-                <h3>{{ __('views.backend.section.navigation.sub_header_1') }}</h3>
+                <h3>Einstellungen</h3>
                 <ul class="nav side-menu">
+                    <li>
+                        <a href="{{ route('admin.veranstaltungen') }}">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            {{ __('views.backend.section.navigation.veranstaltungen') }}
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ route('admin.users') }}">
                             <i class="fa fa-users" aria-hidden="true"></i>
                             {{ __('views.backend.section.navigation.menu_1_1') }}
                         </a>
                     </li>
-
                 </ul>
             </div>
 

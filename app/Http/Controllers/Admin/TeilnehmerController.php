@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Anmeldung;
 use App\Teilnehmer;
+use App\Veranstaltung;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,38 +17,38 @@ class TeilnehmerController extends Controller
      */
     public function index()
     {
-        return view('admin.teilnehmer.index', ['teilnehmer' => Teilnehmer::get()]);
+        return view('admin.teilnehmer.index', ['teilnehmer' => Veranstaltung::find(1)->Anmeldungen()]);
     }
 
     public function AnmeldeBtn($id)
     {
-        $teilnehmer = Teilnehmer::find($id);
-        $teilnehmer->Angemeldet = true;
-        $teilnehmer->save();
+        $anmeldung = Anmeldung::find($id);
+        $anmeldung->angemeldet = true;
+        $anmeldung->save();
         return back()->withInput();
     }
 
     public function BezahltBtn($id)
     {
-        $teilnehmer = Teilnehmer::find($id);
-        $teilnehmer->Bezahlt = true;
-        $teilnehmer->save();
+        $anmeldung = Anmeldung::find($id);
+        $anmeldung->bezahlt = true;
+        $anmeldung->save();
         return back()->withInput();
     }
 
     public function HelferBtn($id)
     {
-        $teilnehmer = Teilnehmer::find($id);
-        $teilnehmer->Helfer = true;
-        $teilnehmer->save();
+        $anmeldung = Anmeldung::find($id);
+        $anmeldung->helfer = true;
+        $anmeldung->save();
         return back();
     }
 
     public function BescheinigungBtn($id)
     {
-        $teilnehmer = Teilnehmer::find($id);
-        $teilnehmer->BescheinigungErhalten = true;
-        $teilnehmer->save();
+        $anmeldung = Anmeldung::find($id);
+        $anmeldung->elternerklaerung = true;
+        $anmeldung->save();
         return back();
     }
 

@@ -68,6 +68,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('teilnehmer/bezahlen/{teilnehmer}', 'TeilnehmerController@BezahltBtn');
     Route::get('teilnehmer/bescheinigung/{teilnehmer}', 'TeilnehmerController@BescheinigungBtn');
 
+    Route::get('veranstaltungen', 'VeranstaltungController@index')->name("veranstaltungen");
 
 
     //Users
