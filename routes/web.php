@@ -53,6 +53,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Dashboard
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
+    Route::get('anmeldung/banderhalten/{anmeldung}', 'VerwaltungController@BandErhalten')->name("anmeldung.banderhalten");
     Route::get('anmeldung/loeschen/{anmeldung}', 'VerwaltungController@Loeschen')->name("anmeldung.loeschen");
     Route::get('anmeldung/aktivieren/{anmeldung}', 'VerwaltungController@Aktivieren')->name("anmeldung.aktivieren");
     Route::put('anmeldung/bearbeiten', 'VerwaltungController@Edit')->name("anmeldung.bearbeitenSend");

@@ -120,6 +120,13 @@ class VerwaltungController extends Controller
         $anmeldung->save();
         return back()->withInput();
     }
+    public function BandErhalten($id)
+    {
+        $anmeldung = Anmeldung::find($id);
+        $anmeldung->BandErhalten = true;
+        $anmeldung->save();
+        return back()->withInput();
+    }
 
 
     public function AnmeldeBtn($id)
