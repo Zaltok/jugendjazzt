@@ -96,6 +96,13 @@ class VerwaltungController extends Controller
     }
 
 
+    public function Loeschen($id) {
+        $anmeldung = Anmeldung::find($id);
+        $anmeldung->deleted = true;
+        $anmeldung->save();
+        return back()->withInput();
+    }
+
     public function AnmeldeBtn($id)
     {
         $anmeldung = Anmeldung::find($id);

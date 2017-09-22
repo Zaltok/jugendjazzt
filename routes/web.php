@@ -53,6 +53,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Dashboard
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
+    Route::get('anmeldung/loeschen/{anmeldung}', 'VerwaltungController@Loeschen')->name("anmeldung.loeschen");
     Route::get('anmeldung/import', 'VerwaltungController@ImportForm')->name("anmeldung.importform");
     Route::post('anmeldung/ImportCSV', 'VerwaltungController@Import')->name("anmeldung.import");
 
