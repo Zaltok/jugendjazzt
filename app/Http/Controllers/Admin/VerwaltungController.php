@@ -68,25 +68,24 @@ class VerwaltungController extends Controller
 
 
         //Instrument 1 Speichern
-        $hauptinstrument = Instrument::find($request->get("Instrument"));
+        $hauptinstrument = Instrument::where("kuerzel", $request->get("Instrument"))->get()->first();
         $ie = new InstrumentEinschaetzung();
         $ie->seit = $request->get("instrument_seit");
         $ie->unterricht_seit = $request->get("instrument_unt");
-        $hauptinstrument->instrumentEinschaetzungs()->save($ie);
+        $hauptinstrument->InstrumentEinschaetzung()->save($ie);
 
         //Instrument 2 Speichern
 
-        $zweitInstrument = Instrument::find($request->get("Instrument2"));
+        $zweitInstrument = Instrument::where("kuerzel", $request->get("Instrument2"))->get()->first();
         $ie2 = new InstrumentEinschaetzung();
         $ie2->seit = $request->get("instrument2_seit");
         $ie2->unterricht_seit = $request->get("instrument2_unt");
-        $zweitInstrument->instrumentEinschaetzungs()->save($ie2);
+        $zweitInstrument->InstrumentEinschaetzung()->save($ie2);
 
 
         $anmeldung->hauptinstrument_id = $hauptinstrument->id;
         $anmeldung->zweitinstrument_id = $zweitInstrument->id;
         $anmeldung->save();
-        dd($ie);
         exit();
 
     }
@@ -189,6 +188,7 @@ class VerwaltungController extends Controller
                     }
                 } else {
                     $teilnehmer = new Teilnehmer();
+                    $anmeldung->Teilnehmer()->associate($teilnehmer);
 
                 }
                 $teilnehmer->Nachname = strlen($line[4]) > 0 ? utf8_encode($line[4]) : "";

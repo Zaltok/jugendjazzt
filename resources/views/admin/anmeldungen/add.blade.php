@@ -221,10 +221,10 @@
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                    Instrument
+                    Instrument(Kürzel)
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="Instrument" type="number"
+                    <input id="Instrument" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Instrument')) parsley-error @endif"
                            name="Instrument">
                     @if($errors->has('Instrument'))
@@ -276,10 +276,10 @@
             <div class="form-group">
                 <!-- todo Dropdown Menü -->
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                    Instrument
+                    Instrument 2 (Kürzel)
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="Instrument2" type="number"
+                    <input id="Instrument2" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Instrument2')) parsley-error @endif"
                            name="Instrument2">
                     @if($errors->has('Instrument2'))
