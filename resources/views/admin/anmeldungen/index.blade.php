@@ -23,9 +23,11 @@
             </thead>
             <tbody>
             @foreach($anmeldungen as $anmeldung)
-                <tr>
+                <tr @if($anmeldung->deleted == 1)style="background-color: #cccccc;" @endif>
                     <td>
-                        @if ($anmeldung->angemeldet == 1)
+                        @if ($anmeldung->deleted == 1)
+                            <i class="fa fa-ban" style="color:red; font-size: 16px;"> <span class="hidden">Abgesagt</span></i>
+                        @elseif ($anmeldung->angemeldet == 1)
                             <i class="fa fa-check" style="color:green; font-size: 16px;"> <span class="hidden">Ja</span></i>
                         @else
                             <i class="fa fa-close" style="color:red; font-size: 16px;"> <span class="hidden">Nein</span></i>
@@ -54,6 +56,7 @@
                         @endif
                     </td>
                     <td>
+                        @if($anmeldung->deleted != 1)
                         <a class="btn btn-xs btn-primary" href="{{ route('admin.anmeldung.show', [$anmeldung->id]) }}"
                            data-toggle="tooltip" data-placement="top"
                            data-title="{{ __('views.admin.users.index.show') }}">
@@ -69,7 +72,13 @@
                            data-title="Entfernen" style="background-color:red;">
                             <i class="fa fa-remove" style=""></i>
                         </a>
-
+                        @else
+                            <a class="btn btn-xs btn-primary" href="{{ route('admin.anmeldung.aktivieren', [$anmeldung->id]) }}"
+                               data-toggle="tooltip" data-placement="top"
+                               data-title="Aktivieren" style="background-color:green;">
+                                <i class="fa fa-check" style=""></i>
+                            </a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

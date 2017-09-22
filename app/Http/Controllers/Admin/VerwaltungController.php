@@ -104,6 +104,15 @@ class VerwaltungController extends Controller
         return back()->withInput();
     }
 
+    public function Aktivieren($id)
+    {
+        $anmeldung = Anmeldung::find($id);
+        $anmeldung->deleted = false;
+        $anmeldung->save();
+        return back()->withInput();
+    }
+
+
     public function AnmeldeBtn($id)
     {
         $anmeldung = Anmeldung::find($id);
@@ -173,7 +182,7 @@ class VerwaltungController extends Controller
         else {
             $zweitInstrument->Einschaetzung = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $zweitInstrument->id)->get()->first();
         }
-        
+
         $instrumente = Instrument::all()->sortBy('bezeichnung')->pluck('bezeichnung', 'id')->prepend('Bitte auswählen','');
         return view('admin.anmeldungen.edit', ['anmeldung' => $anmeldung = Anmeldung::find($id), 'hauptinstrument' => $hauptinstrument, 'zweitinstrument' => $zweitInstrument, 'instrumente' => $instrumente]);
     }
@@ -195,8 +204,10 @@ class VerwaltungController extends Controller
         if($instrEin instanceof InstrumentEinschaetzung) {
             $instrEin->seit = $request->get("instrument_seit");
             $instrEin->unterricht_seit = $request->get("instrument_unt");
+            $instrEin->save();
+            $anmeldung->Hauptinstrument()->associate(Instrument::find($request->get("Instrument")));
         }
-        else {
+    else {
             $instrEin = new InstrumentEinschaetzung();
             $instrEin->Instrument()->associate(Instrument::find($request->get("Instrument")));
             $instrEin->seit = $request->get("instrument_seit");
@@ -209,6 +220,7 @@ class VerwaltungController extends Controller
         if($instrEin2 instanceof InstrumentEinschaetzung) {
             $instrEin2->seit = $request->get("instrument2_seit");
             $instrEin2->unterricht_seit = $request->get("instrument2_unt");
+            $instrEin2->save();
             $anmeldung->Zweitinstrument()->associate(Instrument::find($request->get("Instrument2")));
         }
         else {
