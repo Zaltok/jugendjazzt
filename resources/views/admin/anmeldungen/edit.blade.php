@@ -320,7 +320,7 @@
             <div class="form-group">
                 <!-- todo Dropdown Menü -->
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                    Instrument 2 (Kürzel)
+                    Instrument 2
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     {!! Form::select('Instrument2', $instrumente, $zweitinstrument->id , array('class' => 'form-control col-md-7 col-xs-12 select2_group ')) !!}
@@ -363,7 +363,7 @@
                            class="form-control col-md-7 col-xs-12 @if($errors->has('instrument2_unt')) parsley-error @endif"
                            name="instrument2_unt"
                            @if($zweitinstrument->Einschaetzung)
-                           value="{{$zweitinstrument->Einschaetzung->seit}}"
+                           value="{{$zweitinstrument->Einschaetzung->unterricht_seit}}"
                             @endif
                     >
                     @if($errors->has('instrument2_unt'))
