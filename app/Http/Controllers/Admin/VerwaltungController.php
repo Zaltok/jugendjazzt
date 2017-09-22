@@ -175,19 +175,19 @@ class VerwaltungController extends Controller
         $hauptinstrument->Einschaetzung = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $hauptinstrument->id)->get()->first();
 
 
-        if($zweitInstrument == null) {
+        if ($zweitInstrument == null) {
             $zweitInstrument = new Instrument();
             $zweitInstrument->Einschaetzung = new InstrumentEinschaetzung();
-        }
-        else {
+        } else {
             $zweitInstrument->Einschaetzung = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $zweitInstrument->id)->get()->first();
         }
 
-        $instrumente = Instrument::all()->sortBy('bezeichnung')->pluck('bezeichnung', 'id')->prepend('Bitte auswählen','');
+        $instrumente = Instrument::all()->sortBy('bezeichnung')->pluck('bezeichnung', 'id')->prepend('Bitte auswählen', '');
         return view('admin.anmeldungen.edit', ['anmeldung' => $anmeldung = Anmeldung::find($id), 'hauptinstrument' => $hauptinstrument, 'zweitinstrument' => $zweitInstrument, 'instrumente' => $instrumente]);
     }
 
-    public function Edit(Request $request) {
+    public function Edit(Request $request)
+    {
         $anmeldung = Anmeldung::find($request->get('id'));
         $teilnehmer = $anmeldung->Teilnehmer()->first();
         $teilnehmer->Geburtstag = ($teilnehmer->Geburtstag != $request->get("Geburtsdatum")) ? $request->get("Geburtsdatum") : $teilnehmer->Geburtstag;
@@ -201,36 +201,38 @@ class VerwaltungController extends Controller
         $teilnehmer->combo = ($teilnehmer->combo != $request->get("Combo")) ? $request->get("Combo") : $teilnehmer->combo;
         $anmeldung->uebernachtung = ($teilnehmer->uebernachtung != $request->get("uebernachtung") && strlen($request->get("uebernachtung")) > 0) ? $request->get("uebernachtung") : $teilnehmer->uebernachtung;
         $instrEin = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $request->get("Instrument"))->first();
-        if($instrEin instanceof InstrumentEinschaetzung) {
+        if ($instrEin instanceof InstrumentEinschaetzung) {
             $instrEin->seit = $request->get("instrument_seit");
             $instrEin->unterricht_seit = $request->get("instrument_unt");
             $instrEin->save();
             $anmeldung->Hauptinstrument()->associate(Instrument::find($request->get("Instrument")));
-        }
-    else {
-            $instrEin = new InstrumentEinschaetzung();
-            $instrEin->Instrument()->associate(Instrument::find($request->get("Instrument")));
-            $instrEin->seit = $request->get("instrument_seit");
-            $instrEin->unterricht_seit = $request->get("instrument_unt");
-            $instrEin->Teilnehmer()->associate($teilnehmer);
-            $instrEin->save();
-            $anmeldung->Hauptinstrument()->associate(Instrument::find($request->get("Instrument")));
+        } else {
+            if ($request->get("Instrument") > 0) {
+                $instrEin = new InstrumentEinschaetzung();
+                $instrEin->Instrument()->associate(Instrument::find($request->get("Instrument")));
+                $instrEin->seit = $request->get("instrument_seit");
+                $instrEin->unterricht_seit = $request->get("instrument_unt");
+                $instrEin->Teilnehmer()->associate($teilnehmer);
+                $instrEin->save();
+                $anmeldung->Hauptinstrument()->associate(Instrument::find($request->get("Instrument")));
+            }
         }
         $instrEin2 = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $request->get("Instrument2"))->first();
-        if($instrEin2 instanceof InstrumentEinschaetzung) {
+        if ($instrEin2 instanceof InstrumentEinschaetzung) {
             $instrEin2->seit = $request->get("instrument2_seit");
             $instrEin2->unterricht_seit = $request->get("instrument2_unt");
             $instrEin2->save();
             $anmeldung->Zweitinstrument()->associate(Instrument::find($request->get("Instrument2")));
-        }
-        else {
-            $instrEin2 = new InstrumentEinschaetzung();
-            $instrEin2->Instrument()->associate(Instrument::find($request->get("Instrument2")));
-            $instrEin2->seit = $request->get("instrument2_seit");
-            $instrEin2->unterricht_seit = $request->get("instrument2_unt");
-            $instrEin2->Teilnehmer()->associate($teilnehmer);
-            $instrEin2->save();
-            $anmeldung->Zweitinstrument()->associate(Instrument::find($request->get("Instrument2")));
+        } else {
+            if ($request->get("Instrument2") > 0) {
+                $instrEin2 = new InstrumentEinschaetzung();
+                $instrEin2->Instrument()->associate(Instrument::find($request->get("Instrument2")));
+                $instrEin2->seit = $request->get("instrument2_seit");
+                $instrEin2->unterricht_seit = $request->get("instrument2_unt");
+                $instrEin2->Teilnehmer()->associate($teilnehmer);
+                $instrEin2->save();
+                $anmeldung->Zweitinstrument()->associate(Instrument::find($request->get("Instrument2")));
+            }
         }
         $teilnehmer->save();
         $anmeldung->save();
@@ -245,7 +247,7 @@ class VerwaltungController extends Controller
      */
     public function show($id)
     {
-       return view('admin.anmeldungen.show', ['anmeldung' => $anmeldung = Anmeldung::find($id)]);
+        return view('admin.anmeldungen.show', ['anmeldung' => $anmeldung = Anmeldung::find($id)]);
     }
 
     public function Import(Request $request)
@@ -359,7 +361,7 @@ class VerwaltungController extends Controller
                     }
                     $anmeldung->Zweitinstrument()->associate($instr1);
                 }
-                if($anmeldung->Teilnehmer()->count() == 0) {
+                if ($anmeldung->Teilnehmer()->count() == 0) {
                     $anmeldung->Teilnehmer()->associate($teilnehmer);
                 }
                 $anmeldung->uebernachtung = ($line[25] > 0) ? $line[25] : 0;
