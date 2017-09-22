@@ -19,15 +19,6 @@ class CreateInstrumentsTable extends Migration
             $table->string('kuerzel');
             $table->timestamps();
         });
-        Schema::create('instrument_teilnehmer', function (Blueprint $table){
-           $table->integer('instrument_id')->unsigned()->index();
-           $table->foreign('instrument_id')->references('id')->on('instruments')->onDelete('cascade');
-           $table->integer('teilnehmer_id')->unsigned()->index();
-           $table->foreign('teilnehmer_id')->references('id')->on('teilnehmers')->onDelete('cascade');
-           $table->integer('seit')->nullable();
-           $table->integer('unterricht_seit')->nullable();
-           $table->timestamps();
-        });
     }
 
     /**
@@ -37,7 +28,6 @@ class CreateInstrumentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instrument_teilnehmer');
         Schema::dropIfExists('instruments');
     }
 }

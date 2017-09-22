@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            {{ Form::open(['route'=>['admin.teilnehmer.import'],'method' => 'post','class'=>'form-horizontal form-label-left', 'files' => true]) }}
+            {{ Form::open(['route'=>['admin.anmeldung.import'],'method' => 'post','class'=>'form-horizontal form-label-left', 'files' => true]) }}
 
             <div class="form-group">
                 {!! Form::label('CSV Datei') !!}

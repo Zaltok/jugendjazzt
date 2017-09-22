@@ -53,13 +53,26 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Dashboard
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
-    Route::get('teilnehmer/instrumentalliste', 'VerwaltungController@Instrumental')->name("instrumentalliste");
+    Route::get('anmeldung/import', 'VerwaltungController@ImportForm')->name("anmeldung.importform");
+    Route::post('anmeldung/ImportCSV', 'VerwaltungController@Import')->name("anmeldung.import");
+
+    Route::get('anmeldung/', 'VerwaltungController@index')->name("anmeldungenuebersicht");
+    Route::get('anmeldung/hinzufuegen', 'VerwaltungController@anmeldungCreateForm')->name("anmeldungerstellenform");
+    Route::put('anmeldung/hinzufuegen', 'VerwaltungController@anmeldungCreate')->name("anmeldungerstellen");
+
+    Route::get('anmeldung/instrumentalliste', 'VerwaltungController@Instrumental')->name("instrumentalliste");
+
+    Route::get('anmeldung/{anmeldung}', 'VerwaltungController@show')->name("anmeldung.show");
+    Route::get('anmeldung/anmelden/{anmeldung}', 'VerwaltungController@AnmeldeBtn');
+    Route::get('anmeldung/helfer/{anmeldung}', 'VerwaltungController@HelferBtn');
+    Route::get('anmeldung/bezahlen/{anmeldung}', 'VerwaltungController@BezahltBtn');
+    Route::get('anmeldung/bescheinigung/{anmeldung}', 'VerwaltungController@BescheinigungBtn');
+
+
     Route::get('teilnehmer/comboliste', 'VerwaltungController@Combo')->name("comboliste");
     // Teilnehmer
     Route::get('teilnehmer', 'TeilnehmerController@index')->name("teilnehmer");
     Route::get('teilnehmer/hinzufuegen', 'TeilnehmerController@Add')->name("teilnehmer.add");
-    Route::get('teilnehmer/ImportCSV', 'TeilnehmerController@ImportForm')->name("teilnehmer.importform");
-    Route::post('teilnehmer/ImportCSV', 'TeilnehmerController@Import')->name("teilnehmer.import");
 
     Route::put('teilnehmer/create', 'TeilnehmerController@store')->name("teilnehmer.create");
     Route::get('teilnehmer/{teilnehmer}', 'TeilnehmerController@show')->name("teilnehmer.show");

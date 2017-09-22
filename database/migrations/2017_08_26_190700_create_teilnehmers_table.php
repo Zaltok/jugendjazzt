@@ -19,12 +19,13 @@ class CreateTeilnehmersTable extends Migration
             $table->string("Vorname");
 
             $table->integer("Alter")->nullable()->default(0);
-            $table->date("Geburtstag")->nullable()->default(null);
-            $table->string("PLZ")->nullable("")->default(null);
-            $table->string("Ort")->nullable("")->default(null);
-            $table->string("Strasse")->nullable("")->default(null);
-            $table->string("Telefon")->nullable("")->default(null);
-            $table->string("Mobil")->nullable("")->default(null);
+            $table->date("Geburtstag")->nullable();
+            $table->string("PLZ")->nullable();
+            $table->string("Ort")->nullable();
+            $table->string("Strasse")->nullable();
+            $table->string("Telefon")->nullable();
+            $table->string("Mobil")->nullable();
+            $table->string("Email")->nullable();
             $table->string("AGBB")->nullable("")->default("");
             $table->integer("eigeneEinschaetzung")->default(1);
             $table->boolean("bigband")->default(false);
