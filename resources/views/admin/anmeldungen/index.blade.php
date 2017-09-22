@@ -47,7 +47,7 @@
                     <td style="text-align: center;">
                         @if ($anmeldung->helfer == 0 && $anmeldung->bezahlt == 0)
                             <i class="fa fa-question" style="color:red; font-size: 20px;"><span class="hidden">Fehlt!</span></i>
-                        @elseif($anmeldung->helfer === 0)
+                        @elseif($anmeldung->helfer == 1)
                             <i class="fa fa-header" style="color:green; font-size: 20px;"><span
                                         class="hidden">Helfer</span></i>
                         @else
