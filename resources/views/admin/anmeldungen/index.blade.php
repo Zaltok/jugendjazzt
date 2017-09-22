@@ -59,6 +59,11 @@
                            data-title="{{ __('views.admin.users.index.show') }}">
                             <i class="fa fa-eye"></i>
                         </a>
+                        <a class="btn btn-xs btn-primary" href="{{ route('admin.anmeldung.bearbeiten', [$anmeldung->id]) }}"
+                           data-toggle="tooltip" data-placement="top"
+                           data-title="Bearbeiten" style="background-color:grey;">
+                            <i class="fa fa-edit" style=""></i>
+                        </a>
                         <a class="btn btn-xs btn-primary" href="{{ route('admin.anmeldung.loeschen', [$anmeldung->id]) }}"
                            data-toggle="tooltip" data-placement="top"
                            data-title="Entfernen" style="background-color:red;">

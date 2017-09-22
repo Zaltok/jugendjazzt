@@ -96,7 +96,8 @@ class VerwaltungController extends Controller
     }
 
 
-    public function Loeschen($id) {
+    public function Loeschen($id)
+    {
         $anmeldung = Anmeldung::find($id);
         $anmeldung->deleted = true;
         $anmeldung->save();
@@ -156,6 +157,74 @@ class VerwaltungController extends Controller
         return view('admin.teilnehmer.index', ['teilnehmer' => Teilnehmer::get()]);
     }
 
+    public function EditForm($id)
+    {
+        $anmeldung = Anmeldung::find($id);
+        $teilnehmer = Teilnehmer::find($anmeldung->Teilnehmer->id);
+        $hauptinstrument = $anmeldung->Hauptinstrument;
+        $zweitInstrument = $anmeldung->Zweitinstrument;
+        $hauptinstrument->Einschaetzung = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $hauptinstrument->id)->get()->first();
+
+
+        if($zweitInstrument == null) {
+            $zweitInstrument = new Instrument();
+            $zweitInstrument->Einschaetzung = new InstrumentEinschaetzung();
+        }
+        else {
+            $zweitInstrument->Einschaetzung = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $zweitInstrument->id)->get()->first();
+        }
+        
+        $instrumente = Instrument::all()->sortBy('bezeichnung')->pluck('bezeichnung', 'id')->prepend('Bitte auswählen','');
+        return view('admin.anmeldungen.edit', ['anmeldung' => $anmeldung = Anmeldung::find($id), 'hauptinstrument' => $hauptinstrument, 'zweitinstrument' => $zweitInstrument, 'instrumente' => $instrumente]);
+    }
+
+    public function Edit(Request $request) {
+        $anmeldung = Anmeldung::find($request->get('id'));
+        $teilnehmer = $anmeldung->Teilnehmer()->first();
+        $teilnehmer->Geburtstag = ($teilnehmer->Geburtstag != $request->get("Geburtsdatum")) ? $request->get("Geburtsdatum") : $teilnehmer->Geburtstag;
+        $teilnehmer->PLZ = ($teilnehmer->PLZ != $request->get("PLZ")) ? $request->get("PLZ") : $teilnehmer->PLZ;
+        $teilnehmer->Ort = ($teilnehmer->Ort != $request->get("Ort")) ? $request->get("Ort") : $teilnehmer->Ort;
+        $teilnehmer->Strasse = ($teilnehmer->Strasse != $request->get("Strasse")) ? $request->get("Strasse") : $teilnehmer->Strasse;
+        $teilnehmer->Telefon = ($teilnehmer->Telefon != $request->get("Telefon")) ? $request->get("Telefon") : $teilnehmer->Telefon;
+        $teilnehmer->Mobil = ($teilnehmer->Mobil != $request->get("Mobil")) ? $request->get("Mobil") : $teilnehmer->Mobil;
+        $teilnehmer->AGBB = ($teilnehmer->AGBB != $request->get("AG")) ? $request->get("AG") : $teilnehmer->AGBB;
+        $teilnehmer->bigband = ($teilnehmer->bigband != $request->get("BigBand")) ? $request->get("BigBand") : $teilnehmer->bigband;
+        $teilnehmer->combo = ($teilnehmer->combo != $request->get("Combo")) ? $request->get("Combo") : $teilnehmer->combo;
+        $anmeldung->uebernachtung = ($teilnehmer->uebernachtung != $request->get("uebernachtung") && strlen($request->get("uebernachtung")) > 0) ? $request->get("uebernachtung") : $teilnehmer->uebernachtung;
+        $instrEin = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $request->get("Instrument"))->first();
+        if($instrEin instanceof InstrumentEinschaetzung) {
+            $instrEin->seit = $request->get("instrument_seit");
+            $instrEin->unterricht_seit = $request->get("instrument_unt");
+        }
+        else {
+            $instrEin = new InstrumentEinschaetzung();
+            $instrEin->Instrument()->associate(Instrument::find($request->get("Instrument")));
+            $instrEin->seit = $request->get("instrument_seit");
+            $instrEin->unterricht_seit = $request->get("instrument_unt");
+            $instrEin->Teilnehmer()->associate($teilnehmer);
+            $instrEin->save();
+            $anmeldung->Hauptinstrument()->associate(Instrument::find($request->get("Instrument")));
+        }
+        $instrEin2 = $teilnehmer->InstrumentEinschaetzung()->where("instrument_id", $request->get("Instrument2"))->first();
+        if($instrEin2 instanceof InstrumentEinschaetzung) {
+            $instrEin2->seit = $request->get("instrument2_seit");
+            $instrEin2->unterricht_seit = $request->get("instrument2_unt");
+            $anmeldung->Zweitinstrument()->associate(Instrument::find($request->get("Instrument2")));
+        }
+        else {
+            $instrEin2 = new InstrumentEinschaetzung();
+            $instrEin2->Instrument()->associate(Instrument::find($request->get("Instrument2")));
+            $instrEin2->seit = $request->get("instrument2_seit");
+            $instrEin2->unterricht_seit = $request->get("instrument2_unt");
+            $instrEin2->Teilnehmer()->associate($teilnehmer);
+            $instrEin2->save();
+            $anmeldung->Zweitinstrument()->associate(Instrument::find($request->get("Instrument2")));
+        }
+        $teilnehmer->save();
+        $anmeldung->save();
+        return back()->withInput();
+    }
+
     /**
      * Display the specified resource.
      *
@@ -164,7 +233,7 @@ class VerwaltungController extends Controller
      */
     public function show($id)
     {
-        return view('admin.anmeldungen.show', ['anmeldung' => $anmeldung = Anmeldung::find($id)]);
+       return view('admin.anmeldungen.show', ['anmeldung' => $anmeldung = Anmeldung::find($id)]);
     }
 
     public function Import(Request $request)
@@ -186,11 +255,10 @@ class VerwaltungController extends Controller
 
                 if ($loadteilnehmer->count() == 1) {
                     $teilnehmer = $loadteilnehmer->first();
-                    if($veranstaltung->Anmeldungen()->where('teilnehmer_id', $teilnehmer->id)->get()->count() > 0) {
+                    if ($veranstaltung->Anmeldungen()->where('teilnehmer_id', $teilnehmer->id)->get()->count() > 0) {
                         $anmeldung = $veranstaltung->Anmeldungen()->where('teilnehmer_id', $teilnehmer->id)->get()->first();
 
-                    }
-                    else{
+                    } else {
                         $anmeldung->Teilnehmer()->associate($teilnehmer);
                     }
                 } else {
@@ -211,34 +279,77 @@ class VerwaltungController extends Controller
 
                 if (strlen($line[7]) > 0) {
 
-                    $instr1 = Instrument::where("kuerzel", $line[7])->get()->first();
+                    $instr1 = Instrument::where("kuerzel", utf8_decode($line[7]))->get()->first();
                     if (!($instr1 instanceof Instrument)) {
                         $instr1 = new Instrument();
-                        $instr1->kuerzel = $line[7];
-                        $instr1->bezeichnung = $line[7];
+                        $instr1->kuerzel = utf8_decode($line[7]);
+                        $instr1->bezeichnung = utf8_decode($line[7]);
                         $instr1->save();
                     }
-                    $instr1 = Instrument::where("kuerzel", $line[7])->get()->first();
-                    $instr1E = InstrumentEinschaetzung::where("instrument_id", $instr1->id)->where("seit", $line[8])->where("unterricht_seit", $line[9])->get();
+                    $instr1 = Instrument::where("kuerzel", utf8_decode($line[7]))->get()->first();
+                    $instr1E = InstrumentEinschaetzung::where("teilnehmer_id", $teilnehmer->id)->where("instrument_id", $instr1->id)->get();
+                    $actualYear = date("Y");
                     if ($instr1E->count() == 0) {
                         $instr1E = new InstrumentEinschaetzung();
+                        //$instr1E->Teilnehmer()->associate($teilnehmer);
                         $instr1E->Instrument()->associate($instr1);
-                        $instr1E->seit = (strlen($line[8]) > 0) ? $line[8] : 0;
-                        $instr1E->unterricht_seit = (strlen($line[9]) > 0) ? $line[9] : 0;
+                        $instr1E->seit = (strlen($line[8]) > 0) ? $actualYear - $line[8] : $actualYear;
+                        $instr1E->unterricht_seit = (strlen($line[9]) > 0) ? $actualYear - $line[9] : $actualYear;
+
+                        $instr1E->Teilnehmer()->associate($teilnehmer);
                         $instr1E->save();
+
                     } else {
                         $instr1E = $instr1E->first();
+                        $instr1E->seit = (strlen($line[8]) > 0) ? $actualYear - $line[8] : $actualYear;
+                        $instr1E->unterricht_seit = (strlen($line[9]) > 0) ? $actualYear - $line[9] : $actualYear;
+                        $instr1E->save();
                     }
                     if (!($instr1E->Teilnehmer()->find($teilnehmer->id) instanceof Teilnehmer)) {
-                        $instr1E->Teilnehmer()->attach($teilnehmer);
+                        $instr1E->Teilnehmer()->associate($teilnehmer);
 
                     }
                     $anmeldung->Hauptinstrument()->associate($instr1);
-                }
-                else {
+                } else {
                     continue;
                 }
+                if (strlen($line[10]) > 0) {
 
+                    $instr1 = Instrument::where("kuerzel", $line[10])->get()->first();
+                    if (!($instr1 instanceof Instrument)) {
+                        $instr1 = new Instrument();
+                        $instr1->kuerzel = utf8_decode($line[10]);
+                        $instr1->bezeichnung = utf8_decode($line[10]);
+                        $instr1->save();
+                    }
+                    $instr1 = Instrument::where("kuerzel", utf8_decode($line[10]))->get()->first();
+                    $instr1E = InstrumentEinschaetzung::where("teilnehmer_id", $teilnehmer->id)->where("instrument_id", $instr1->id)->get();
+                    $actualYear = date("Y");
+                    if ($instr1E->count() == 0) {
+                        $instr1E = new InstrumentEinschaetzung();
+                        //$instr1E->Teilnehmer()->associate($teilnehmer);
+                        $instr1E->Instrument()->associate($instr1);
+                        $instr1E->seit = (strlen($line[11]) > 0) ? $actualYear - $line[11] : $actualYear;
+                        $instr1E->unterricht_seit = (strlen($line[12]) > 0) ? $actualYear - $line[12] : $actualYear;
+
+                        $instr1E->Teilnehmer()->associate($teilnehmer);
+                        $instr1E->save();
+
+                    } else {
+                        $instr1E = $instr1E->first();
+                        $instr1E->seit = (strlen($line[11]) > 0) ? $actualYear - $line[11] : $actualYear;
+                        $instr1E->unterricht_seit = (strlen($line[12]) > 0) ? $actualYear - $line[12] : $actualYear;
+                        $instr1E->save();
+                    }
+                    if (!($instr1E->Teilnehmer()->find($teilnehmer->id) instanceof Teilnehmer)) {
+                        $instr1E->Teilnehmer()->associate($teilnehmer);
+
+                    }
+                    $anmeldung->Zweitinstrument()->associate($instr1);
+                }
+                if($anmeldung->Teilnehmer()->count() == 0) {
+                    $anmeldung->Teilnehmer()->associate($teilnehmer);
+                }
                 $anmeldung->uebernachtung = ($line[25] > 0) ? $line[25] : 0;
                 $anmeldung->bemerkung = (strlen($line[1]) > 0) ? $line[1] : "";
                 $anmeldung->save();

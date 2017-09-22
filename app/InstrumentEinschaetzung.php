@@ -18,7 +18,7 @@ class InstrumentEinschaetzung extends Model
     }
 
     public function Teilnehmer() {
-        return $this->belongsToMany(Teilnehmer::class, "instrument_einschaetzung_teilnehmer", "ie_id", "teilnehmer_id" );
+        return $this->belongsTo(Teilnehmer::class);
     }
 
 }
