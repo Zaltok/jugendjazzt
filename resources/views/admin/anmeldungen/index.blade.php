@@ -25,7 +25,7 @@
             @foreach($anmeldungen as $anmeldung)
                 <tr>
                     <td>
-                        @if ($anmeldung->angemeldet === 1)
+                        @if ($anmeldung->angemeldet == 1)
                             <i class="fa fa-check" style="color:green; font-size: 16px;"> <span class="hidden">Ja</span></i>
                         @else
                             <i class="fa fa-close" style="color:red; font-size: 16px;"> <span class="hidden">Nein</span></i>

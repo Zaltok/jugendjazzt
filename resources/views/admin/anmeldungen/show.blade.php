@@ -34,7 +34,7 @@
                 <th>Anmeldung</th>
                 <td>
                     <p>
-                    @if ($anmeldung->angemeldet === 1)
+                    @if ($anmeldung->angemeldet == 1)
 
                     @else
                         <a class="btn btn-success" href="/admin/anmeldung/anmelden/{{$anmeldung->id}}">Anmelden</a>
@@ -42,7 +42,7 @@
                     @endif
                     </p>
                     <p>
-                    @if ($anmeldung->bezahlt === 1 || $anmeldung->helfer === 1)
+                    @if ($anmeldung->bezahlt == 1 || $anmeldung->helfer == 1)
 
                     @else
                         <a class="btn btn-success" href="/admin/anmeldung/helfer/{{$anmeldung->id}}">Helfer</a>
@@ -50,7 +50,7 @@
                         <!-- ausblenden wenn bezahlt -->
                     @endif
                     </p><p>
-                        @if ($anmeldung->Teilnehmer->Alter() >= 18 || $anmeldung->elternerklaerung === 1)
+                        @if ($anmeldung->Teilnehmer->Alter() >= 18 || $anmeldung->elternerklaerung == 1)
 
                         @else
                             <a class="btn btn-success" href="/admin/anmeldung/bescheinigung/{{$anmeldung->id}}">Bescheinigung erhalten</a>
