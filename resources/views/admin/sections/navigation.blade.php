@@ -33,18 +33,6 @@
                             Anmeldungen
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.instrumentalliste') }}">
-                            <i class="fa fa-music" aria-hidden="true"></i>
-                            {{ __('views.backend.section.navigation.Instrumental_list') }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.comboliste') }}">
-                            <i class="fa fa-users" aria-hidden="true"></i>
-                            {{ __('views.backend.section.navigation.Combo_list') }}
-                        </a>
-                    </li>
                 </ul>
             </div>
             <div class="menu_section">
@@ -53,19 +41,19 @@
                     <li>
                         <a href="{{ route('admin.veranstaltungen') }}">
                             <i class="fa fa-calendar" aria-hidden="true"></i>
-                            {{ __('views.backend.section.navigation.veranstaltungen') }}
+                         Veranstaltungen
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admin.users') }}">
                             <i class="fa fa-users" aria-hidden="true"></i>
-                            {{ __('views.backend.section.navigation.menu_1_1') }}
+                           Users
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admin.teilnehmer') }}">
                             <i class="fa fa-users" aria-hidden="true"></i>
-                            {{ __('views.backend.section.navigation.Member_Overview') }}
+                           Teilnehmer
                         </a>
                     </li>
                 </ul>
