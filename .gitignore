@@ -8,7 +8,6 @@ bower_components/
 bootstrap/compiled.php
 bootstrap/cache/
 /vendor/
-node_modules/
 storage/
 storage/debugbar/
 storage/framework/views/
