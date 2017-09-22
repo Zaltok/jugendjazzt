@@ -67,24 +67,32 @@ class VerwaltungController extends Controller
         $anmeldung->Veranstaltung()->associate(Veranstaltung::find(1));
 
 
-        //Instrument 1 Speichern
-        $hauptinstrument = Instrument::where("kuerzel", $request->get("Instrument"))->get()->first();
-        $ie = new InstrumentEinschaetzung();
-        $ie->seit = $request->get("instrument_seit");
-        $ie->unterricht_seit = $request->get("instrument_unt");
-        $hauptinstrument->InstrumentEinschaetzung()->save($ie);
+        if($request->get("Instrument") > 0) {
+            //Instrument 1 Speichern
+            $hauptinstrument = Instrument::find($request->get("Instrument"))->get()->first();
+            $ie = new InstrumentEinschaetzung();
+            $ie->seit = $request->get("instrument_seit");
+            $ie->unterricht_seit = $request->get("instrument_unt");
+            $ie->Instrument()->associate($hauptinstrument);
+            $ie->Teilnehmer()->associate($currentTeilnehmer);
+            $ie->save();
+            $hauptinstrument->InstrumentEinschaetzung()->save($ie);
+            $anmeldung->Hauptinstrument()->associate($hauptinstrument);
+        }
 
         //Instrument 2 Speichern
+        if($request->get("Instrument2") > 0) {
+            $zweitInstrument = Instrument::find($request->get("Instrument2"))->get()->first();
+            $ie2 = new InstrumentEinschaetzung();
+            $ie2->seit = $request->get("instrument2_seit");
+            $ie2->unterricht_seit = $request->get("instrument2_unt");
+            $ie2->Instrument()->associate($zweitInstrument);
+            $ie2->Teilnehmer()->associate($currentTeilnehmer);
+            $ie2->save();
+            $zweitInstrument->InstrumentEinschaetzung()->save($ie2);
+            $anmeldung->Zweitinstrument()->associate($zweitInstrument);
+        }
 
-        $zweitInstrument = Instrument::where("kuerzel", $request->get("Instrument2"))->get()->first();
-        $ie2 = new InstrumentEinschaetzung();
-        $ie2->seit = $request->get("instrument2_seit");
-        $ie2->unterricht_seit = $request->get("instrument2_unt");
-        $zweitInstrument->InstrumentEinschaetzung()->save($ie2);
-
-
-        $anmeldung->hauptinstrument_id = $hauptinstrument->id;
-        $anmeldung->zweitinstrument_id = $zweitInstrument->id;
         $anmeldung->save();
         exit();
 
@@ -92,7 +100,8 @@ class VerwaltungController extends Controller
 
     public function anmeldungCreateForm()
     {
-        return view('admin.anmeldungen.add');
+        $instrumente = Instrument::all()->sortBy('bezeichnung')->pluck('bezeichnung', 'id')->prepend('Bitte auswählen', '');
+        return view('admin.anmeldungen.add',['instrumente' => $instrumente]);
     }
 
 

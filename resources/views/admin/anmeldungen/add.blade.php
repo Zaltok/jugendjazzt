@@ -7,7 +7,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             {{ Form::open(['route'=>['admin.anmeldungerstellen'],'method' => 'put','class'=>'form-horizontal form-label-left']) }}
             <div class="form-group">
-                <h3><label class="control-label col-md-3 col-sm-3 col-xs-12" >Teilnehmer</label></h3>
+                <h3><label class="control-label col-md-3 col-sm-3 col-xs-12">Teilnehmer</label></h3>
             </div>
             <div class="form-group">
 
@@ -18,7 +18,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="name" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Vorname')) parsley-error @endif"
-                           name="Vorname" required>
+                           name="Vorname" required >
                     @if($errors->has('Vorname'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Vorname') as $error)
@@ -53,7 +53,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="Geburtsdatum" type="date"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Geburtsdatum')) parsley-error @endif"
-                           name="Geburtsdatum">
+                           name="Geburtsdatum"
+
+                    ">
                     @if($errors->has('Geburtsdatum'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Geburtdatum') as $error)
@@ -70,7 +72,10 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="PLZ" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('PLZ')) parsley-error @endif"
-                           name="PLZ">
+
+                           name="PLZ"
+
+                    >
                     @if($errors->has('PLZ'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('PLZ') as $error)
@@ -87,7 +92,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="Ort" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Ort')) parsley-error @endif"
-                           name="Ort">
+                           name="Ort"
+
+                    >
                     @if($errors->has('Ort'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Ort') as $error)
@@ -104,7 +111,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="Strasse" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Strasse')) parsley-error @endif"
-                           name="Strasse">
+                           name="Strasse"
+
+                    >
                     @if($errors->has('Strasse'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Strasse') as $error)
@@ -121,7 +130,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="Telefon" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Telefon')) parsley-error @endif"
-                           name="Telefon">
+                           name="Telefon"
+
+                    >
                     @if($errors->has('Telefon'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Telefon') as $error)
@@ -138,7 +149,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="Mobil" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Mobil')) parsley-error @endif"
-                           name="Mobil">
+                           name="Mobil"
+
+                    >
                     @if($errors->has('Mobil'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Mobil') as $error)
@@ -155,7 +168,10 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="AG" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('AG')) parsley-error @endif"
-                           name="AG">
+                           name="AG"
+
+
+                    >
                     @if($errors->has('AG'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('AG') as $error)
@@ -172,7 +188,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="BigBand" type="number"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('BigBand')) parsley-error @endif"
-                           name="BigBand">
+                           name="BigBand"
+
+                    >
                     @if($errors->has('BigBand'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('BigBand') as $error)
@@ -189,7 +207,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="Combo" type="number"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('Combo')) parsley-error @endif"
-                           name="Combo">
+                           name="Combo"
+
+                    >
                     @if($errors->has('Combo'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Combo') as $error)
@@ -206,7 +226,11 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="uebernachtung" type="number"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('uebernachtung')) parsley-error @endif"
-                           name="uebernachtung">
+                           name="uebernachtung"
+
+
+
+                    >
                     @if($errors->has('uebernachtung'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('uebernachtung') as $error)
@@ -217,16 +241,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <h3><label class="control-label col-md-3 col-sm-3 col-xs-12" >Instrument 1</label></h3>
+                <h3><label class="control-label col-md-3 col-sm-3 col-xs-12">Instrument 1</label></h3>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                    Instrument(Kürzel)
+                    Instrument
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="Instrument" type="text"
-                           class="form-control col-md-7 col-xs-12 @if($errors->has('Instrument')) parsley-error @endif"
-                           name="Instrument">
+
+                    {!! Form::select('Instrument', $instrumente, null , array('class' => 'form-control col-md-7 col-xs-12 select2_group ', "required" => 1)) !!}
                     @if($errors->has('Instrument'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Instrument') as $error)
@@ -243,7 +266,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="instrument_seit" type="number" min="2000" max="2017"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('instrument_seit')) parsley-error @endif"
-                           name="instrument_seit">
+                           name="instrument_seit"
+
+                    >
                     @if($errors->has('instrument_seit'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('instrument_seit') as $error)
@@ -260,7 +285,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="instrument_unt" type="number" min="2000" max="2017"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('instrument_unt')) parsley-error @endif"
-                           name="instrument_unt">
+                           name="instrument_unt"
+
+                    >
                     @if($errors->has('instrument_unt'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('instrument_unt') as $error)
@@ -271,17 +298,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <h3><label class="control-label col-md-3 col-sm-3 col-xs-12" >Instrument 2</label></h3>
+                <h3><label class="control-label col-md-3 col-sm-3 col-xs-12">Instrument 2</label></h3>
             </div>
             <div class="form-group">
                 <!-- todo Dropdown Menü -->
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                    Instrument 2 (Kürzel)
+                    Instrument 2
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="Instrument2" type="text"
-                           class="form-control col-md-7 col-xs-12 @if($errors->has('Instrument2')) parsley-error @endif"
-                           name="Instrument2">
+                    {!! Form::select('Instrument2', $instrumente, null, array('class' => 'form-control col-md-7 col-xs-12 select2_group ')) !!}
                     @if($errors->has('Instrument2'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('Instrument2') as $error)
@@ -298,7 +323,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="instrument2_seit" type="number" min="2000" max="2017"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('instrument2_seit')) parsley-error @endif"
-                           name="instrument2_seit">
+                           name="instrument2_seit"
+
+                    >
                     @if($errors->has('instrument2_seit'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('instrument2_seit') as $error)
@@ -315,7 +342,9 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="instrument2_unt" type="number" min="2000" max="2017"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('instrument2_unt')) parsley-error @endif"
-                           name="instrument2_unt">
+                           name="instrument2_unt"
+
+                    >
                     @if($errors->has('instrument2_unt'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('instrument2_unt') as $error)
@@ -331,6 +360,7 @@
                 </div>
             </div>
             {{ Form::close() }}
+
         </div>
     </div>
 @endsection
