@@ -36,18 +36,15 @@
                     <td>{{ $anmeldung->Teilnehmer->Alter() }}</td>
                     <td>{{ $anmeldung->Hauptinstrument->kuerzel}}</td>
                     <td style="text-align: center;">
-                        @if ($anmeldung->elternerklaerung === 0 && $anmeldung->Teilnehmer->Alter() < 18)
-                            <i class="fa fa-warning" style="color:red; font-size: 20px;"><span class="hidden">Fehlt noch was!</span></i>
-                        @elseif($anmeldung->Teilnehmer->Alter() >= 18)
-                            <i class="fa fa-check" style="color:green; font-size: 20px;"><span class="hidden">Erklärung erhalten.</span></i>
+                        @if ($anmeldung->elternerklaerung == 1 || $anmeldung->Teilnehmer->Alter() >= 18)
+                            <i class="fa fa-check" style="color:green; font-size: 20px;"><span class="hidden">Fehlt.</span></i>
                         @else
-                            <i class="fa fa-check" style="color:green; font-size: 20px;"><span class="hidden">Erklärung erhalten.</span></i>
-                            <!-- ausblenden wenn bezahlt -->
+                            <i class="fa fa-warning" style="color:red; font-size: 20px;"><span class="hidden">Erklärung erhalten.</span></i>
                         @endif
                     </td>
                     <td style="text-align: center;">
-                        @if ($anmeldung->helfer === 0 && $anmeldung->bezahlt === 0)
-                            <i class="fa fa-question" style="color:red; font-size: 20px;"><span class="hidden">Fehlt noch was!</span></i>
+                        @if ($anmeldung->helfer == 0 && $anmeldung->bezahlt == 0)
+                            <i class="fa fa-question" style="color:red; font-size: 20px;"><span class="hidden">Fehlt!</span></i>
                         @elseif($anmeldung->helfer === 0)
                             <i class="fa fa-header" style="color:green; font-size: 20px;"><span
                                         class="hidden">Helfer</span></i>
